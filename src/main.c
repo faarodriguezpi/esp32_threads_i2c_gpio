@@ -32,7 +32,7 @@
 /* scheduling priority used by each thread */
 
 
-#define STACKSIZE 1024
+#define STACKSIZE 4096
 #define PRIORITY 7
 #define DT_DRV_COMPAT		espressif_esp32_gpio
 #define SLEEP_TIME		10
@@ -116,7 +116,7 @@ void temperatura(void *id, void *unused1, void *unused2)
     printk("---------->>   *** I2C LM75A ***   <<--------------\n\n");
 	printk("I2C LM75A - Pruebas.\n");
 	/* ----- */
-	
+	k_mutex_lock(&cliblock, K_FOREVER);
 	pointer = 0x03; //Tos register pointer - 5000h por defecto
 	i2c_write(i2c_dev, &pointer, 1, LM75A_DEFAULT_ADDRESS);
 	k_msleep(5);
@@ -176,7 +176,7 @@ void temperatura(void *id, void *unused1, void *unused2)
 	k_msleep(5);
 	printk("----->> presion %x temp %x\n\n", data[0], data[3]); // data[0] = 0xF7 reg info -  data[3] = 0xFA red info.
 	
-    
+    k_mutex_unlock(&cliblock);
     
     
     ret = 0;
@@ -221,8 +221,7 @@ static void start_threads(void)
 			blink1, INT_TO_POINTER(0), NULL, NULL,
 			0, K_USER, K_FOREVER);
 			
-	k_object_access_grant(&cliblock, &threads[0]);
-	k_object_access_grant(&cliblock, &threads[1]);
+	
 	
 	k_thread_start(&threads[0]);
 			
@@ -232,6 +231,8 @@ static void start_threads(void)
 	
 	k_thread_start(&threads[1]);
 	
+	k_object_access_grant(&cliblock, &threads[0]);
+	k_object_access_grant(&cliblock, &threads[1]);
 }
 
 void main(void)
@@ -239,7 +240,7 @@ void main(void)
 	//display_demo_description();
 
 	#if CONFIG_TIMESLICING
-	k_sched_time_slice_set(5000, 0);
+	k_sched_time_slice_set(1000, 0); //antes 5000
 #endif	
     	
 	k_mutex_init(&cliblock);	//Inicializar Mutex	
