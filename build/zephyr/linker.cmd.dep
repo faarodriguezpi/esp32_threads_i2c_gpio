@@ -1,9 +1,9 @@
 zephyr/linker.cmd: \
  /home/alex/zephyrproject/zephyr/soc/xtensa/esp32/linker.ld \
  /home/alex/zephyrproject/zephyr/include/devicetree.h \
- /home/alex/zephyrproject/zephyr/samples/threads2/build/zephyr/include/generated/autoconf.h \
- /home/alex/zephyrproject/zephyr/samples/threads2/build/zephyr/include/generated/devicetree_unfixed.h \
- /home/alex/zephyrproject/zephyr/samples/threads2/build/zephyr/include/generated/devicetree_fixups.h \
+ /home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/zephyr/include/generated/autoconf.h \
+ /home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/zephyr/include/generated/devicetree_unfixed.h \
+ /home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/zephyr/include/generated/devicetree_fixups.h \
  /home/alex/zephyrproject/zephyr/include/sys/util.h \
  /home/alex/zephyrproject/zephyr/lib/libc/minimal/include/stdbool.h \
  /home/alex/zephyrproject/zephyr/include/sys/util_internal.h \
@@ -21,7 +21,7 @@ zephyr/linker.cmd: \
  /home/alex/zephyrproject/zephyr/include/toolchain/gcc.h \
  /home/alex/zephyrproject/zephyr/include/linker/linker-defs.h \
  /home/alex/zephyrproject/zephyr/include/toolchain/common.h \
- /home/alex/zephyrproject/zephyr/samples/threads2/build/zephyr/include/generated/offsets.h \
+ /home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/zephyr/include/generated/offsets.h \
  /home/alex/zephyrproject/zephyr/include/linker/linker-tool.h \
  /home/alex/zephyrproject/zephyr/include/linker/linker-tool-gcc.h \
  /home/alex/zephyrproject/zephyr/include/linker/rel-sections.ld \

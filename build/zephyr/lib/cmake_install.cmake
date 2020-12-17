@@ -39,10 +39,10 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/alex/zephyrproject/zephyr/samples/threads2/build/zephyr/lib/libc/cmake_install.cmake")
-  include("/home/alex/zephyrproject/zephyr/samples/threads2/build/zephyr/lib/posix/cmake_install.cmake")
-  include("/home/alex/zephyrproject/zephyr/samples/threads2/build/zephyr/lib/gui/cmake_install.cmake")
-  include("/home/alex/zephyrproject/zephyr/samples/threads2/build/zephyr/lib/os/cmake_install.cmake")
+  include("/home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/zephyr/lib/libc/cmake_install.cmake")
+  include("/home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/zephyr/lib/posix/cmake_install.cmake")
+  include("/home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/zephyr/lib/gui/cmake_install.cmake")
+  include("/home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/zephyr/lib/os/cmake_install.cmake")
 
 endif()
 

@@ -35,7 +35,7 @@
 #define STACKSIZE 1024
 #define PRIORITY 7
 #define DT_DRV_COMPAT		espressif_esp32_gpio
-#define SLEEP_TIME		1000
+#define SLEEP_TIME		10
 #define LED_PIN		2
 
 #define STACK_SIZE (768 + CONFIG_TEST_EXTRA_STACKSIZE)
@@ -73,12 +73,14 @@ void blink1(void *id, void *unused1, void *unused2)
 	}
 	
 	while (1){
+	    k_mutex_lock(&cliblock, K_FOREVER);
 		gpio_pin_set(dev, LED_PIN,  (int)led_on);
 		printk("LED1 on\n");
 		printk("LED2 %s\n", (led_on ? "on" : "off"));
 		led_on = !led_on;
 
-		k_msleep(SLEEP_TIME);
+		//k_msleep(SLEEP_TIME);
+		k_mutex_unlock(&cliblock);
 	}
 
 }
@@ -182,6 +184,7 @@ void temperatura(void *id, void *unused1, void *unused2)
         //int i2c_write(conststructdevice *dev, const uint8_t *buf, uint32_t num_bytes, uint16_t addr)
         
         // int i2c_read(const structdevice *dev, uint8_t *buf, uint32_t num_bytes, uint16_t addr)
+        k_mutex_lock(&cliblock, K_FOREVER);
         ret = i2c_read(i2c_dev, &data[0], 2, LM75A_DEFAULT_ADDRESS);
         
         //int i2c_reg_read_byte(conststructdevice *dev, uint16_t dev_addr, uint8_t reg_addr, uint8_t *value)
@@ -201,7 +204,8 @@ void temperatura(void *id, void *unused1, void *unused2)
         temp = temp * LM75A_DEGREES_RESOLUTION;
         //temp = data[0] << 8 | data[1];
         printk("Temperatura en Celsius: %d\n", temp); //float not supported by printk
-        k_msleep(2500);
+        //k_msleep(10);
+        k_mutex_unlock(&cliblock);
     }
     	
 	
@@ -234,10 +238,20 @@ void main(void)
 {
 	//display_demo_description();
 
-	
+	#if CONFIG_TIMESLICING
+	k_sched_time_slice_set(5000, 0);
+#endif	
+    	
+	k_mutex_init(&cliblock);	//Inicializar Mutex	
 	
 	start_threads();
-
+    
+    #ifdef CONFIG_COVERAGE
+	/* Wait a few seconds before main() exit, giving the sample the
+	 * opportunity to dump some output before coverage data gets emitted
+	 */
+	k_sleep(K_MSEC(5000));
+#endif
 
 }
 

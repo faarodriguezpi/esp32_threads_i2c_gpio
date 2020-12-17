@@ -533,10 +533,10 @@
 /home/alex/zephyrproject/zephyr/modules/Kconfig.vega
 /home/alex/zephyrproject/zephyr/modules/Kconfig.xtensa
 /home/alex/zephyrproject/zephyr/samples/subsys/usb/usb_pid.Kconfig
-/home/alex/zephyrproject/zephyr/samples/threads2/build/Kconfig/Kconfig.modules
-/home/alex/zephyrproject/zephyr/samples/threads2/build/Kconfig/Kconfig.soc
-/home/alex/zephyrproject/zephyr/samples/threads2/build/Kconfig/Kconfig.soc.arch
-/home/alex/zephyrproject/zephyr/samples/threads2/build/Kconfig/Kconfig.soc.defconfig
+/home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/Kconfig/Kconfig.modules
+/home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/Kconfig/Kconfig.soc
+/home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/Kconfig/Kconfig.soc.arch
+/home/alex/zephyrproject/zephyr/samples/threadsEsp32_2/build/Kconfig/Kconfig.soc.defconfig
 /home/alex/zephyrproject/zephyr/soc/Kconfig
 /home/alex/zephyrproject/zephyr/soc/xtensa/esp32/Kconfig.defconfig
 /home/alex/zephyrproject/zephyr/soc/xtensa/esp32/Kconfig.soc
