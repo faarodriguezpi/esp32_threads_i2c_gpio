@@ -92,11 +92,12 @@ Otros Enlaces
 `Estructura del DTS en Zephyr <https://docs.zephyrproject.org/latest/guides/dts/howtos.html#get-a-struct-device-from-a-devicetree-node>`_. 
 
 `Punteros y funciones en C <https://es.slideshare.net/CesarOsorio2/punteros-y-funciones>`_.
+
 `Readme en RST <https://github.com/ralsina/rst-cheatsheet/blob/master/rst-cheatsheet.rst>`_.
 
 `Instalación de herramientas ESP32 <https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html>`_.  -> estos pasos instalan el toolchain en una ubicación por defecto en $HOME (ctrl + H para ver carpeta *.espressif*). Si se quiere instalar en otra ubicación, ir al enlace a continuación.
 
-`Python <https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-setup-scratch.html>`_. -> Toolchain ESP32 en otra ubicación, from scratch.
+`Toolchain ESP32 from scratch <https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-setup-scratch.html>`_. -> Toolchain ESP32 en otra ubicación, from scratch.
 
 `Python <http://www.python.org/>`_.
 
