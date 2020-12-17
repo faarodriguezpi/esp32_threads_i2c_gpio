@@ -1,0 +1,65 @@
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           Tensilica Xtensa Processor
+  Version:                           0x1
+  Entry point address:               0x40080838
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          550536 (bytes into file)
+  Flags:                             0x300
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         2
+  Size of section headers:           40 (bytes)
+  Number of section headers:         27
+  Section header string table index: 26
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .rtc.text         PROGBITS        400c0000 004454 000000 00   W  0   0  1
+  [ 2] .iram0.vectors    PROGBITS        40080000 000074 000400 00  AX  0   0  4
+  [ 3] devices           PROGBITS        3ffb0000 003db0 000084 00   A  0   0  4
+  [ 4] k_heap_area       PROGBITS        3ffb0084 003e34 000014 00  WA  0   0  4
+  [ 5] k_mutex_area      PROGBITS        3ffb0098 003e48 000028 00  WA  0   0  4
+  [ 6] initlevel         PROGBITS        40080400 000474 000050 00   A  0   0  4
+  [ 7] sw_isr_table      PROGBITS        40080450 0004c4 000100 00  WA  0   0  4
+  [ 8] text              PROGBITS        40080550 0005c4 0037e2 00  AX  0   0  4
+  [ 9] .dram0.data       PROGBITS        3ffb00c0 003e70 00008c 00  WA  0   0  4
+  [10] rodata            PROGBITS        3ffb014c 003efc 000558 00   A  0   0  4
+  [11] bss               NOBITS          3ffb06a8 004454 0005d8 00  WA  0   0  8
+  [12] app_noinit        PROGBITS        3ffb0c80 004454 000000 00   W  0   0  1
+  [13] noinit            NOBITS          3ffb0c80 004454 002c00 00  WA  0   0 16
+  [14] .comment          PROGBITS        00000000 004454 000025 01  MS  0   0  1
+  [15] .debug_aranges    PROGBITS        00000000 004480 000c60 00      0   0  8
+  [16] .debug_info       PROGBITS        00000000 0050e0 03c731 00      0   0  1
+  [17] .debug_abbrev     PROGBITS        00000000 041811 008d2e 00      0   0  1
+  [18] .debug_line       PROGBITS        00000000 04a53f 01ce7c 00      0   0  1
+  [19] .debug_frame      PROGBITS        00000000 0673bc 001ba8 00      0   0  4
+  [20] .debug_str        PROGBITS        00000000 068f64 005bad 01  MS  0   0  1
+  [21] .debug_loc        PROGBITS        00000000 06eb11 00f638 00      0   0  1
+  [22] .debug_ranges     PROGBITS        00000000 07e150 003098 00      0   0  8
+  [23] .xtensa.info      NOTE            00000000 0811e8 000038 00      0   0  1
+  [24] .symtab           SYMTAB          00000000 081220 002860 10     25 288  4
+  [25] .strtab           STRTAB          00000000 083a80 002afe 00      0   0  1
+  [26] .shstrtab         STRTAB          00000000 08657e 00010a 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  p (processor specific)
+
+Program Headers:
+  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+  LOAD           0x000074 0x40080000 0x40080000 0x03d32 0x03d32 RWE 0x4
+  LOAD           0x003db0 0x3ffb0000 0x3ffb0000 0x006a4 0x03880 RW  0x10
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     .iram0.vectors initlevel sw_isr_table text 
+   01     devices k_heap_area k_mutex_area .dram0.data rodata bss noinit 

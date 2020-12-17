@@ -1,0 +1,193 @@
+/dts-v1/;
+/ {
+ #address-cells = <1>;
+ #size-cells = <1>;
+ chosen { };
+ aliases { };
+};
+/ {
+ soc {
+  #address-cells = <1>;
+  #size-cells = <1>;
+  compatible = "simple-bus";
+  ranges;
+ };
+};
+/ {
+ chosen {
+  zephyr,entropy = &trng0;
+ };
+ cpus {
+  #address-cells = <1>;
+  #size-cells = <0>;
+  cpu0: cpu@0 {
+   device_type = "cpu";
+   compatible = "cadence,tensilica-xtensa-lx6";
+   reg = <0>;
+   clock-source = <1U>;
+  };
+  cpu1: cpu@1 {
+   device_type = "cpu";
+   compatible = "cadence,tensilica-xtensa-lx6";
+   reg = <1>;
+   clock-source = <1U>;
+  };
+ };
+ sram0: memory@3ffb0000 {
+  compatible = "mmio-sram";
+  reg = <0x3FFB0000 0x50000>;
+ };
+ rtc: rtc@3ff48000 {
+  compatible = "espressif,esp32-rtc";
+  reg = <0x3ff48000 0x0D8>;
+  label = "RTC";
+  xtal-freq = <0U>;
+  xtal-div = <0>;
+  #clock-cells = <1>;
+  status = "ok";
+ };
+ soc {
+  uart0: uart@3ff40000 {
+   compatible = "espressif,esp32-uart";
+   reg = <0x3ff40000 0x400>;
+   label = "UART_0";
+   clocks = <&rtc 2>;
+   status = "disabled";
+  };
+  uart1: uart@3ff50000 {
+   compatible = "espressif,esp32-uart";
+   reg = <0x3ff50000 0x400>;
+   label = "UART_1";
+   clocks = <&rtc 5>;
+   status = "disabled";
+  };
+  uart2: uart@3ff6e000 {
+   compatible = "espressif,esp32-uart";
+   reg = <0x3ff6E000 0x400>;
+   label = "UART_2";
+   clocks = <&rtc 23>;
+   status = "disabled";
+  };
+  pinmux: pinmux@3ff49000 {
+   compatible = "espressif,esp32-pinmux";
+   reg = <0x3ff49000 0x94>;
+  };
+  gpio0: gpio@3ff44000 {
+   compatible = "espressif,esp32-gpio";
+   gpio-controller;
+   #gpio-cells = <2>;
+   reg = <0x3ff44000 0x800>;
+   label = "GPIO_0";
+   ngpios = <32>;
+  };
+  gpio1: gpio@3ff44800 {
+   compatible = "espressif,esp32-gpio";
+   gpio-controller;
+   #gpio-cells = <2>;
+   reg = <0x3ff44800 0x800>;
+   label = "GPIO_1";
+   ngpios = <8>;
+  };
+  i2c0: i2c@3ff53000 {
+   compatible = "espressif,esp32-i2c";
+   #address-cells = <1>;
+   #size-cells = <0>;
+   reg = <0x3ff53000 0x1000>;
+   label = "I2C_0";
+   clocks = <&rtc 7>;
+   status = "disabled";
+  };
+  i2c1: i2c@3ff67000 {
+   compatible = "espressif,esp32-i2c";
+   #address-cells = <1>;
+   #size-cells = <0>;
+   reg = <0x3ff67000 0x1000>;
+   label = "I2C_1";
+   clocks = <&rtc 18>;
+   status = "disabled";
+  };
+  trng0: trng@3ff75144 {
+   compatible = "espressif,esp32-trng";
+   reg = <0x3FF75144 0x4>;
+   label = "TRNG_0";
+   status = "disabled";
+  };
+  wdt0: watchdog@3ff5f048 {
+   compatible = "espressif,esp32-watchdog";
+   reg = <0x3ff5f048 0x20>;
+   label = "WDT_0";
+   status = "okay";
+  };
+  wdt1: watchdog@3ff60048 {
+   compatible = "espressif,esp32-watchdog";
+   reg = <0x3ff60048 0x20>;
+   label = "WDT_1";
+   status = "disabled";
+  };
+ };
+};
+/ {
+ model = "esp32";
+ compatible = "espressif,esp32";
+ aliases {
+  uart-0 = &uart0;
+  i2c-0 = &i2c0;
+ };
+ chosen {
+  zephyr,sram = &sram0;
+  zephyr,console = &uart0;
+  zephyr,shell-uart = &uart0;
+ };
+};
+&cpu0 {
+ clock-frequency = <240U>;
+};
+&cpu1 {
+ clock-frequency = <240U>;
+};
+&uart0 {
+ status = "okay";
+ current-speed = <115200>;
+ tx-pin = <1>;
+ rx-pin = <3>;
+ rts-pin = <22>;
+ cts-pin = <19>;
+};
+&uart1 {
+ current-speed = <115200>;
+ tx-pin = <10>;
+ rx-pin = <9>;
+ rts-pin = <11>;
+ cts-pin = <6>;
+ hw-flow-control;
+};
+&uart2 {
+ current-speed = <115200>;
+ tx-pin = <17>;
+ rx-pin = <16>;
+ rts-pin = <7>;
+ cts-pin = <8>;
+ hw-flow-control;
+};
+&i2c0 {
+ status = "okay";
+ clock-frequency = <400000>;
+ sda-pin = <21>;
+ scl-pin = <22>;
+};
+&i2c1 {
+ clock-frequency = <400000>;
+ sda-pin = <18>;
+ scl-pin = <5>;
+};
+&trng0 {
+ status = "okay";
+};
+/ {
+ aliases {
+  i2c-1 = &i2c1;
+ };
+};
+&i2c1 {
+ status = "okay";
+};

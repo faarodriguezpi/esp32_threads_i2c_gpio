@@ -1,0 +1,10 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/ {
+	aliases {
+		i2c-1 = &i2c1;
+	};
+};
+
+&i2c1 {
+	status = "okay";
+};

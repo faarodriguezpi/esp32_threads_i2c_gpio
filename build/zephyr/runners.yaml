@@ -1,0 +1,21 @@
+# Available runners configured by board.cmake.
+runners:
+- esp32
+
+# Default flash runner if --runner is not given.
+flash-runner: esp32
+
+# Common runner configuration values.
+config:
+  board_dir: /home/alex/zephyrproject/zephyr/boards/xtensa/esp32
+  # Build outputs:
+  elf_file: zephyr.elf
+  bin_file: zephyr.bin
+  # Host tools:
+  gdb: /home/alex/.espressif/tools/xtensa-esp32-elf/esp-2020r3-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gdb
+  openocd: /usr/bin/openocd
+
+# Runner specific arguments
+args:
+  esp32:
+    - --esp-idf-path=/home/alex/esp/esp-idf
