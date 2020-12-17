@@ -14,8 +14,9 @@ Trabajan de forma sincronizada, mediante la utilización de ``k_mutex`` soportad
 
 Los hilos generan información para el usuario a través de la función ``printk``, y se puede observar el comportamiento por el puerto serial (usualmente USB0).
 
+Los detalles de la tarjeta usada, algunas características y demás se pueden encontrar acá: Tarjeta-ESP32_
 
-
+.. _Tarjeta-ESP32: https://randomnerdtutorials.com/esp32-pinout-reference-gpios/
 
 Pruebas del ejemplo
 ********************
@@ -26,15 +27,15 @@ Comando a correr::
     west build -p auto -b esp32
     west flash
 
-Change ``esp32`` de forma apropiada para soporte de otras boards.
+Cambiar ``esp32`` para soporte de otras boards.
 
-Algunas veces es necesario hacer el flash mientras se mantiene el botón *Boot* para que el programa sea cargado.
+Algunas veces es necesario hacer el flash mientras se mantiene el botón **Boot** para que el programa sea cargado.
 
 En otra terminal::
     
     sudo minicom ttyUSB0 -s
 
-Y el botón *En* para reiniciar el programa y su resultado.
+Y el botón **En** para reiniciar el programa y ver su resultado.
 
 Rutas de espressif en Zephyr
 ********************
@@ -55,6 +56,53 @@ Adicionalmente, este ejemplo contiene en /boards un archivo .overlay. Este permi
 
     set(DTC_OVERLAY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/boards/esp32v1.overlay")
 
+Hilos
+******
+
+La función ``static void start_threads(void)`` es la que realiza la creación de los dos hilos, mientras que con ``k_object_access_grant`` se garantiza acceso al elemento de sincronización *kmutex*. 
+
+Los hilos tienen la misma prioridad, por lo cual se espera que cumplan cada uno con un tiempo de Slicing (en main() #if CONFIG_TIMESLICING). No se ha revisado con certeza si los kmutex bloquean o alargan ese timeSlicing, o si una vez pasado ese tiempo, el *Scheduler* le da paso al otro hilo. Lo mas probable es que mientras el hilo en ejecución no suelte al *mutex*, el otro hilo no pueda hacer ejecución alguna.
+
+Función blink1
+============
+
+Esta función trabaja con los *gpio's* de manera que hace una configuración inicial, para posteriormente tomar el mutex, realizar su rutina en el while, para posteriormente soltar el mutex.
+
+Función temperatura
+============
+
+Esta función trabaja con los *i2c*, usando las funciones provistas por Zephyr. En el inicio se hacen algunas pruebas de escritura y lectura, pero la lectura de temperatura se  hace realmente en el while, usando la interface i2c0. Esta lectura se puede hacer inmediatamente es energizado el sensor LM75A.
+
+Asi mismo, se encuentra un par de lecturas del BMP280, usando  la interface i2c1 (debe ser activada en el ``prj.conf`` explicitamente). Esta interface tambien depende del archivo ``.overlay`` en la carpeta *boards*. Las lecturas realizadas en el sensor solo indican el *ID*, pero es necesario realizar una serie de compensaciones que no han sido implementadas, pueden ser encontradas en una API_ provista por Bosch.
+.. _API: https://github.com/BoschSensortec/BMP280_driver
+
+
+Acá el sensor BMP280 con su pinout_.
+.. _pinout: https://startingelectronics.org/pinout/GY-BMP280-pressure-sensor-module/
+
+Otros Enlaces
+*********
+
+`Primeros pasos con ESP32 (en portugués) <https://www.embarcados.com.br/zephyr-rtos-no-esp32-primeiros-passos/>`_.
+
+`Esquemático y detalles del LM75 <https://github.com/hpaluch/i2c-cjmcu-75>`_.
+
+`Explicación e integración API BMP280 <http://electronicayciencia.blogspot.com/2018/10/la-presion-atmosferica-bmp280.html>`_. 
+
+`Estructura del DTS en Zephyr <https://docs.zephyrproject.org/latest/guides/dts/howtos.html#get-a-struct-device-from-a-devicetree-node>`_. 
+
+`Punteros y funciones en C <https://es.slideshare.net/CesarOsorio2/punteros-y-funciones>`_.
+`Readme en RST <https://github.com/ralsina/rst-cheatsheet/blob/master/rst-cheatsheet.rst>`_.
+
+`Instalación de herramientas ESP32 <https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html>`_.  -> estos pasos instalan el toolchain en una ubicación por defecto en $HOME (ctrl + H para ver carpeta *.espressif*). Si se quiere instalar en otra ubicación, ir al enlace a continuación.
+
+`Python <https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/linux-setup-scratch.html>`_. -> Toolchain ESP32 en otra ubicación, from scratch.
+
+`Python <http://www.python.org/>`_.
+
+
+--
+====
 
 
 This example demonstrates spawning multiple threads using
